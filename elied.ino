@@ -86,7 +86,7 @@ void printMsg(const char *message)
         tft.setFreeFont(&FreeSans9pt7b);
         Serial.println("[Print] 9pt font");
     }
-    else if (tft.textWidth(msg) / 2.8 > LCD_WIDTH)
+    else if (tft.textWidth(msg) / 2.5 > LCD_WIDTH)
     {
         tft.setFreeFont(&FreeSans12pt7b);
         Serial.println("[Print] 12pt font");
@@ -173,8 +173,8 @@ void getPrefs()
     // If setting up new ELIED, convenient to set these first time
     // strcpy(appPrefs.ssid, "Joel office");
     // strcpy(appPrefs.password, "");
-    // strcpy(appPrefs.host, "wschat.joelburton.net");
-    // appPrefs.port = 3000;
+    // strcpy(appPrefs.host, "elied.wschat.joelburton.net");
+    // appPrefs.port = 80;
     // appPrefs.useLED = true;
 
     // Serial.printf("[First] ssid=%s\n", appPrefs.ssid);
@@ -419,6 +419,8 @@ void connectToWifi()
         tft.setTextColor(TFT_PINK);
         tft.drawString("***", LCD_WIDTH - 1, 95, 2);
         delay(100);
+        if (digitalRead(RED_BTN) == LOW)
+            esp_deep_sleep_start();
     }
 
     // Remove asterisks
@@ -597,10 +599,10 @@ void loop()
 
     if (blink)
         digitalWrite(LED, HIGH);
-    delay(20);
+    delay(10);
 
     digitalWrite(LED, LOW);
-    delay(300);
+    delay(350);
 
     if (pendingAck)
     {
